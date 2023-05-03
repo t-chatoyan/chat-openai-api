@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ChatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,6 @@ Route::group([
         Route::get('me', [AuthController::class, 'me']);
     });
 });
+Route::post('/message',[ChatController::class,'sendMessage']);
+Route::get('/messages/{id}',[ChatController::class,'getMessages']);
+Route::get('/chats',[ChatController::class,'getChats']);
