@@ -11,14 +11,8 @@
                 <div class="d-flex">
                     <div class="w-25">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-center"><a href="{{ route('menu1') }}">menu1</a></li>
-                            <li class="list-group-item d-flex justify-content-center"><a href="{{ route('menu1') }}">menu1</a></li>
-                            <li class="list-group-item d-flex justify-content-center"><a href="{{ route('menu1') }}">menu1</a></li>
-                            <li class="list-group-item d-flex justify-content-center"><a href="{{ route('menu1') }}">menu1</a></li>
+                            asda
                         </ul>
-                    </div>
-                    <div>
-                        dfsdgdffd
                     </div>
                 </div>
             </div>

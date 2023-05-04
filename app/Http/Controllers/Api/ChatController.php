@@ -26,7 +26,10 @@ class ChatController extends Controller
             if ($question['choices'] && $question['choices'][0]) {
                 $answer = $question['choices'][0]['message']['content'];
 
-                $chat = Chat::updateOrCreate(['customer_id' => auth('api')->user()->id]);
+                $chat = Chat::find($request->chat_id);
+                if(!$chat) {
+                    $chat = Chat::create(['customer_id' => auth('api')->user()->id]);
+                }
 
                 Messages::create([
                     'message' => $request->message,
@@ -76,6 +79,8 @@ class ChatController extends Controller
 
     public function getChats()
     {
-        return [];
+        $customer_id = auth('api')->user()->id;
+        $chats = Chat::with('customer')->where('customer_id',$customer_id)->get();
+        return $chats;
     }
 }

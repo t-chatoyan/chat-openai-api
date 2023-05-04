@@ -10,7 +10,7 @@ class OpenAiService
 {
     public static function sendQuestion($question){
 
-        $api_key = "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";
+        $api_key = env('OPENAI_API_KEY');
         $api_endpoint = "https://api.openai.com/v1/chat/completions";
 
         $request_body = [

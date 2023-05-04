@@ -13,9 +13,9 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('menu1') }}" class="nav-link text-white {{ (request()->is('menu1')) ? 'active' : '' }}">
+            <a href="{{ route('customers-list') }}" class="nav-link text-white {{ (request()->is('customers-list')) ? 'active' : '' }}">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                Dashboard
+                Customers List
             </a>
         </li>
         <li>
@@ -28,12 +28,6 @@
             <a href="#" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
                 Products
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-                Customers
             </a>
         </li>
     </ul>

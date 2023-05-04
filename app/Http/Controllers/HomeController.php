@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,15 +21,16 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
         return view('home');
     }
 
-    public function menu1()
+    public function customersList()
     {
-        return view('menu1');
+        $customers = Customer::all();
+        return view('customersList',compact('customers'));
     }
 }
