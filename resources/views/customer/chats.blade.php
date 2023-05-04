@@ -13,24 +13,35 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    <div>
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Customer Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($customers as $customer)
+                            @foreach ($chats as $chat)
                                 <tr>
-                                    <td>{{ $customer->id }}</td>
-                                    <td>{{ $customer->name }}</td>
-                                    <td>{{ $customer->email }}</td>
+                                    <td>
+                                        {{ $chat->id }}
+                                    </td>
+                                    <td>{{ $chat->customer->name }}</td>
+                                    <td>{{ $chat->customer->email }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{route('messages', $chat->id)}}">Open Messages</a>
+                                    </td>
                                 </tr>
+                                </a>
                             @endforeach
                             </tbody>
                         </table>
+                        {{$chats->onEachSide(5)->links()}}
+                    </div>
                 </div>
             </div>
         </div>

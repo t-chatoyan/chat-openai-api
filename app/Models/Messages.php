@@ -14,4 +14,24 @@ class Messages extends Model
         'chat_id',
         'is_user',
     ];
+
+    protected $appends = ['type'];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function chat()
+    {
+        return $this->belongsTo(Chat::class, 'chat_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        return $this->is_user ? 'Question' : 'Answer';
+
+    }
 }

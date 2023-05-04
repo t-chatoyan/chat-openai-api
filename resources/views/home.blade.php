@@ -11,7 +11,7 @@
                 <div class="d-flex">
                     <div class="w-25">
                         <ul class="list-group">
-                            asda
+                            Home
                         </ul>
                     </div>
                 </div>
