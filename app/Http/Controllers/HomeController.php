@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chat;
-use App\Models\Customer;
-use App\Models\Messages;
+
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -27,6 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('customers');
     }
 }

@@ -14,12 +14,18 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('chat_id');
+            $table->unsignedBigInteger('customer_id');
             $table->text('message');
             $table->boolean('is_user');
 
             $table->foreign('chat_id')
                 ->references('id')
                 ->on('chats')
+                ->onDelete('cascade');
+
+            $table->foreign('customer_id')
+                ->references('id')
+                ->on('customers')
                 ->onDelete('cascade');
 
             $table->timestamps();
