@@ -19,6 +19,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Created At</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
@@ -28,6 +29,7 @@
                                         <td>{{ $customer->id }}</td>
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->created_at }}</td>
                                         <td>
                                             <a class="btn btn-primary" href="{{route('chats', $customer->id)}}">Open Chats List</a>
                                         </td>

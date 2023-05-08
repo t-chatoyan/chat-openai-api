@@ -30,6 +30,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Created At</th>
                                 <th scope="col">Settings</th>
                             </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                         <td scope="col">{{$admin->id}}</td>
                                         <td scope="col">{{$admin->name}}</td>
                                         <td scope="col">{{$admin->email}}</td>
+                                        <td scope="col">{{$admin->created_at}}</td>
                                         <td scope="col">
                                             <a href="{{route('admins.update', $admin->id) }}">
                                                 <button class="btn btn-success mx-2">Edit</button>

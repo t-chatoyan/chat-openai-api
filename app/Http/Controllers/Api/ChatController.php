@@ -25,7 +25,7 @@ class ChatController extends Controller
                 if(!$chat) {
                     $chat = Chat::create([
                         'customer_id' => auth('api')->user()->id,
-                        'name' => $request->name
+                        'name' => $request->name ? $request->name : 'New',
                     ]);
                 }
 

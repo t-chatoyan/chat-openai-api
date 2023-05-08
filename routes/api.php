@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\PasswordResetRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,9 @@ Route::group([
 ], function ($router) {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/reset-password-request',[PasswordResetRequestController::class, 'sendPasswordResetEmail']);
+    Route::post('/change-password', [ChangePasswordController::class, 'passwordResetProcess']);
+    Route::post('/get-email', [ChangePasswordController::class, 'getEmail']);
 
     Route::group(['middleware' => 'jwt.verify'], function ($router) {
         Route::get('logout', [AuthController::class, 'logout']);

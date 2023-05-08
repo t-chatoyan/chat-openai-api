@@ -21,6 +21,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Created At</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
@@ -32,6 +33,7 @@
                                     </td>
                                     <td>{{ $chat->customer->name }}</td>
                                     <td>{{ $chat->customer->email }}</td>
+                                    <td>{{ $chat->customer->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary" href="{{route('messages', $chat->id)}}">Open Messages</a>
                                     </td>
