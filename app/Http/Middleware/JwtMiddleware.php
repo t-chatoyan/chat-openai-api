@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Exception;
-use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+use Illuminate\Support\Facades\Auth;
 
 class JwtMiddleware
 {
@@ -20,7 +20,10 @@ class JwtMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
+            $user = Auth::guard('api')->check();
+            if (!$user) {
+                return response()->json(['message' => 'user not found'], 401);
+            }
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['status' => 'Token is Invalid'], 401);

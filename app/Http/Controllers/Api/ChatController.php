@@ -19,13 +19,13 @@ class ChatController extends Controller
     {
         try {
             $question = OpenAiService::sendQuestion($request->message);
-            if ($question['choices'] && $question['choices'][0]) {
+            if ($question && $question['choices'] && $question['choices'][0]) {
                 $answer = $question['choices'][0]['message']['content'];
                 $chat = Chat::find($request->chat_id);
                 if(!$chat) {
                     $chat = Chat::create([
-                        'customer_id' => auth('api')->id(),
-                        'name' => $request->name,
+                        'customer_id' => auth('api')->user()->id,
+                        'name' => $request->name
                     ]);
                 }
 
@@ -45,6 +45,12 @@ class ChatController extends Controller
 
                 return response()->json([
                     'data' => new MessageResource($message),
+                    'chat' => $chat,
+                    'status' => true,
+                ]);
+            } else {
+                return response()->json([
+                    'data' => 'Server Error',
                     'status' => true,
                 ]);
             }
@@ -80,8 +86,43 @@ class ChatController extends Controller
 
     public function getChats()
     {
-        $customer_id = auth('api')->user()->id;
-        $chats = Chat::with('customer')->where('customer_id',$customer_id)->get();
-        return $chats;
+        try {
+            $customer_id = auth('api')->id();
+            $chats = Chat::with('customer')->where('customer_id',$customer_id)->get();
+
+            return response()->json([
+                'data' => $chats,
+                'status' => true,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'messages' => $e->getMessage(),
+                'status' => false,
+            ], 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $chat = Chat::find($id);
+            $chat->name = $request->name;
+            $chat->save();
+
+            return response()->json([
+                'data' => $chat->load('customer'),
+                'status' => true,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'messages' => $e->getMessage(),
+                'status' => false,
+            ], 500);
+        }
     }
 }
