@@ -6,6 +6,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed id
+ * @property mixed is_user
+ * @property mixed chat_id
+ * @property mixed created_at
+ * @property mixed customer_id
+ * @property mixed customer
+ * @property mixed message
+ * @property mixed type
+ */
 class MessageResource extends JsonResource
 {
     /**

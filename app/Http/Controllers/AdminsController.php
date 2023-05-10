@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Models\Admins;
-use Illuminate\Http\Request;
 
 class AdminsController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */

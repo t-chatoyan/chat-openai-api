@@ -11,6 +11,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
 
+    /**
+     * @param SignupRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(SignupRequest $request)
     {
         try {
