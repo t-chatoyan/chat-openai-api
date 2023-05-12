@@ -14,11 +14,11 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admins') }}" class="nav-link {{ (request()->is('admins')) ? 'active' : '' }}">
+            <a href="{{ route('user') }}" class="nav-link {{ (request()->is('user')) ? 'active' : '' }}">
                 <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#customers"></use>
                 </svg>
-                Admins
+                Users
             </a>
         </li>
     </ul>

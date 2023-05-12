@@ -7,11 +7,11 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-sm-between">
                         <span>
-                            {{ __('Admins List') }}
+                            {{ __('Users List') }}
                         </span>
-                        <a href="/admins/add">
+                        <a href="/user/add">
                             <button class="btn btn-primary">
-                                Add Admin
+                                Add User
                             </button>
                         </a>
                     </div>
@@ -35,18 +35,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($admins))
-                                @foreach($admins as $admin)
+                            @if(!empty($users))
+                                @foreach($users as $user)
                                     <tr>
-                                        <td scope="col">{{$admin->id}}</td>
-                                        <td scope="col">{{$admin->name}}</td>
-                                        <td scope="col">{{$admin->email}}</td>
-                                        <td scope="col">{{$admin->created_at}}</td>
+                                        <td scope="col">{{$user->id}}</td>
+                                        <td scope="col">{{$user->name}}</td>
+                                        <td scope="col">{{$user->email}}</td>
+                                        <td scope="col">{{$user->created_at}}</td>
                                         <td scope="col">
-                                            <a href="{{route('admins.update', $admin->id) }}">
+                                            <a href="{{route('user.update', $user->id) }}">
                                                 <button class="btn btn-success mx-2">Edit</button>
                                             </a>
-                                            <form class="d-inline" action="{{ route('admins.destroy', $admin->id) }}" method="POST">
+                                            <form class="d-inline" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger" type="submit">Delete</button>
@@ -57,7 +57,7 @@
                             @endif
                             </tbody>
                         </table>
-                        {{$admins->onEachSide(5)->links()}}
+                        {{$users->onEachSide(5)->links()}}
                     </div>
                 </div>
             </div>

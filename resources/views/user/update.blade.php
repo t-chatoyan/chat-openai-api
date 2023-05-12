@@ -28,7 +28,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ $admin->name }}" required autocomplete="name" autofocus>
+                                           value="{{ $user->name }}" required autocomplete="name" autofocus>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -43,10 +43,10 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ $admin->email }}" required autocomplete="email">
+                                           value="{{ $user->email }}" required autocomplete="email">
                                     <input id="id" type="text"
                                            class="form-control @error('email') is-invalid @enderror" name="id"
-                                           value="{{ $admin->id }}" required hidden autocomplete="id">
+                                           value="{{ $user->id }}" required hidden autocomplete="id">
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

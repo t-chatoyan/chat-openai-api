@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\UpdatePasswordRequest;
-use App\Models\Admins;
+use App\Models\User;
 
-class AdminsController extends Controller
+class UsersController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $admins = Admins::paginate(5);
-        if ($admins) {
-            return view('admin.list', compact('admins'));
+        $users = User::paginate(5);
+        if ($users) {
+            return view('user.list', compact('users'));
         }
     }
 
@@ -24,7 +24,7 @@ class AdminsController extends Controller
      */
     public function adminPage()
     {
-        return view('admin.add');
+        return view('user.add');
     }
 
     /**
@@ -35,12 +35,12 @@ class AdminsController extends Controller
     {
         $data = $request->validated();
         $password = bcrypt($data['password']);
-        Admins::create([
+        User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $password,
         ]);
-        return redirect('/admins');
+        return redirect('/user');
     }
 
     /**
@@ -49,12 +49,12 @@ class AdminsController extends Controller
      */
     public function destroy($id)
     {
-        $admin = Admins::findOrFail($id);
+        $admin = User::findOrFail($id);
         if ($admin) {
             $admin->delete();
-            return redirect('/admins');
+            return redirect('/user');
         } else {
-            return view('admin.list')->with('error', 'Admin not found');
+            return view('user.list')->with('error', 'Admin not found');
         }
     }
 
@@ -64,9 +64,9 @@ class AdminsController extends Controller
      */
     public function show($id)
     {
-        $admin = Admins::findOrFail($id);
-        if ($admin) {
-            return view('admin.update', compact('admin'));
+        $user = User::findOrFail($id);
+        if ($user) {
+            return view('user.update', compact('user'));
         } else {
             return back();
         }
@@ -80,7 +80,7 @@ class AdminsController extends Controller
      */
     public function update(UpdatePasswordRequest $request)
     {
-        $admin = Admins::findOrFail($request['id']);
+        $admin = User::findOrFail($request['id']);
         if ($admin) {
             $data = $request->validated();
             $password = bcrypt($data['password']);
@@ -89,7 +89,7 @@ class AdminsController extends Controller
                 'email' => $data['email'],
                 'password' => $password,
             ]);
-            return redirect('/admins');
+            return redirect('/user');
         }
     }
 }
