@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 use App\Models\Customer;
-use App\Models\User;
+use App\Models\Admin;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -22,7 +22,7 @@ class AuthController extends Controller
             $data['password'] = bcrypt($data['password']);
 
             /**
-             * @var User \App\Models\User
+             * @var Admin \App\Models\User
              */
             $customer = Customer::create($data);
             $token = JWTAuth::fromUser($customer);

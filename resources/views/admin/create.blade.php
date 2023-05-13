@@ -18,7 +18,7 @@
                         </div>
                     @endif
                     <div>
-                        <form method="POST" action="/create-form">
+                        <form method="POST" action="{{route('admin.store')}}">
                             @csrf
                             <div class="row mb-3">
                                 <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
@@ -67,7 +67,7 @@
                                        class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="confirmPassword" required autocomplete="new-password">
+                                           name="confirm_password" required autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="row mb-0">

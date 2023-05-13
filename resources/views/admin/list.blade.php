@@ -7,22 +7,22 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-sm-between">
                         <span>
-                            {{ __('Users List') }}
+                            {{ __('Admins List') }}
                         </span>
-                        <a href="/user/add">
+                        <a href="{{route('admin.create') }}">
                             <button class="btn btn-primary">
-                                Add User
+                                Add Admin
                             </button>
                         </a>
                     </div>
                 </div>
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-
                     <div>
                         <table class="table table-striped">
                             <thead>
@@ -35,29 +35,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!empty($users))
-                                @foreach($users as $user)
+                            @if(!empty($admins))
+                                @foreach($admins as $admin)
                                     <tr>
-                                        <td scope="col">{{$user->id}}</td>
-                                        <td scope="col">{{$user->name}}</td>
-                                        <td scope="col">{{$user->email}}</td>
-                                        <td scope="col">{{$user->created_at}}</td>
+                                        <td scope="col">{{$admin->id}}</td>
+                                        <td scope="col">{{$admin->name}}</td>
+                                        <td scope="col">{{$admin->email}}</td>
+                                        <td scope="col">{{$admin->created_at}}</td>
                                         <td scope="col">
-                                            <a href="{{route('user.update', $user->id) }}">
+                                            <a href="{{route('admin.edit', $admin->id) }}">
                                                 <button class="btn btn-success mx-2">Edit</button>
                                             </a>
-                                            <form class="d-inline" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                            <form onsubmit="return confirm('Do you want to delete this admin?');" class="d-inline" action="{{ route('admin.destroy', $admin->id) }}"
+                                                  method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger" type="submit">Delete</button>
                                             </form>
+
                                         </td>
                                     </tr>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
-                        {{$users->onEachSide(5)->links()}}
+                        {{$admins->onEachSide(15)->links()}}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,24 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
-});
-
 Auth::routes();
+Route::group(['middleware' => 'auth'], function ($router) {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
+    Route::resource('admin', AdminController::class);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
 
-Route::prefix('user')->group(function () {
-    Route::get('/', [App\Http\Controllers\UsersController::class, 'index'])->name('user');
-    Route::get('/add', [App\Http\Controllers\UsersController::class, 'adminPage']);
-    Route::delete('/delete/{id}', [App\Http\Controllers\UsersController::class, 'destroy'])->name('user.destroy');
-    Route::get('/update/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('user.update');
+    Route::get('/chats/{id}', [App\Http\Controllers\CustomerController::class, 'getChat'])->name('chats');
+    Route::get('/chat/{id}/messages', [App\Http\Controllers\CustomerController::class, 'getChatMessages'])->name('messages');
+    Route::get('/messages/{id}/export', [App\Http\Controllers\CustomerController::class, 'exportMessages'])->name('export');
+
 });
-Route::post('/create-form', [App\Http\Controllers\UsersController::class, 'addAdmin'])->name('create-form');
-Route::put('/update-form', [App\Http\Controllers\UsersController::class, 'update'])->name('update-form');
-
-Route::get('/chats/{id}', [App\Http\Controllers\CustomerController::class, 'getChat'])->name('chats');
-Route::get('/chat/{id}/messages', [App\Http\Controllers\CustomerController::class, 'getChatMessages'])->name('messages');
-Route::get('/messages/{id}/export', [App\Http\Controllers\CustomerController::class, 'exportMessages'])->name('export');
