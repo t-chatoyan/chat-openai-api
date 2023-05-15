@@ -5,19 +5,25 @@ namespace App\Exports;
 use App\Models\Messages;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ExportMessages implements FromCollection, WithHeadings
+class ExportMessages implements FromCollection, WithHeadings, WithMapping, WithColumnWidths, WithColumnFormatting
 {
     /**
-     * @var
+     * @var int
      */
     protected $chat_id;
 
     /**
      * ExportMessages constructor.
-     * @param $chat_id
+     *
+     * @param int $chat_id
      */
-    public function __construct($chat_id)
+    public function __construct(int $chat_id)
     {
         $this->chat_id = $chat_id;
     }
@@ -27,14 +33,53 @@ class ExportMessages implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $messages = Messages::where('chat_id', $this->chat_id)
-            ->with('chat')->orderBy('id', 'asc')
-            ->select('id', 'chat_id', 'message', 'is_user')->get();
-        return $messages;
+        return Messages::with('chat')
+            ->where('chat_id', $this->chat_id)
+            ->orderBy('id', 'asc')
+            ->select('id', 'chat_id', 'message', 'is_user')
+            ->get();
     }
 
     public function headings(): array
     {
-        return ['Message Id', 'Chat Id', 'Message', 'Type'];
+        return [
+            'Message Id',
+            'Chat Id',
+            'Message',
+            'Type'
+        ];
+    }
+
+    /**
+     * @param mixed $message
+     * @return array
+     */
+    public function map($message): array
+    {
+        return [
+            $message->id,
+            $message->chat_id,
+            $message->message,
+            $message->is_user ? 'question' : 'answer'
+        ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'C' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'C' => 100,
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->getStyle('C')->getAlignment()->setWrapText(true);
     }
 }
