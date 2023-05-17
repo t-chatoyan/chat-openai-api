@@ -17,7 +17,7 @@ class OpenAiService
             "model" => "gpt-3.5-turbo",
             "messages" => [["role" => "user", "content" => $question]],
             "temperature" => 0,
-            "max_tokens" => 100,
+            "max_tokens" => 2048,
         ];
 
         $response = Http::withHeaders([
