@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 /**
  * @property mixed id
@@ -30,7 +31,8 @@ class MessageResource extends JsonResource
            'id' => $this->id,
            'is_user' => $this->is_user,
            'chat_id' => $this->chat_id,
-           'created_at' => Carbon::parse($this->created_at)->format('M d Y'),
+//           'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+           'created_at' => $this->created_at,
            'customer_id' => $this->customer_id,
            'customer' => $this->customer,
            'message' => $this->message,
