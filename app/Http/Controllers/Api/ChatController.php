@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
 use App\Http\Services\OpenAiService;
+use App\Models\Categories;
 use App\Models\Chat;
 use App\Models\Messages;
 use Illuminate\Http\Request;
@@ -23,8 +24,13 @@ class ChatController extends Controller
                 $answer = $question['choices'][0]['message']['content'];
                 $chat = Chat::find($request->chat_id);
                 if(!$chat) {
+                    $category = Categories::create([
+                        'name' => $request->name ? $request->name : 'New',
+                    ]);
+
                     $chat = Chat::create([
                         'customer_id' => auth('api')->user()->id,
+                        'category_id' => $category->id,
                         'name' => $request->name ? $request->name : 'New',
                     ]);
                 }
@@ -84,6 +90,9 @@ class ChatController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getChats()
     {
         try {

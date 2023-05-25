@@ -15,10 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('category_id')->nullable();
 
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')
+                ->onDelete('cascade');
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
                 ->onDelete('cascade');
 
             $table->timestamps();

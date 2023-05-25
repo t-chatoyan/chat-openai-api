@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
+use App\Models\Categories;
+use App\Models\Chat;
 use App\Models\Customer;
 use App\Models\Admin;
+use App\Models\Messages;
+use http\Message;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -26,11 +30,31 @@ class AuthController extends Controller
              */
             $customer = Customer::create($data);
             $token = JWTAuth::fromUser($customer);
-
+            $categories = Categories::all();
+            $chats = [];
+            foreach ($categories as $category) {
+                $chat = Chat::create([
+                    'customer_id' => $customer->id,
+                    'category_id' => $category->id,
+                    'name' => $category->name,
+                ]);
+                $chats[] = $chat;
+            }
+            foreach ($chats as $chat) {
+                if($chat->name === 'Познакомь Искусственный Интеллект MSU с собой.') {
+                    Messages::create([
+                        'message' => 'Когда, во время прохождения программы, у тебя будут появляться инсайты, новые компетенции, открываться твои сильные стороны, появится твой уникальный дар, то обязательно дополняй информацию о себе в этой категории.',
+                        'is_user' => false,
+                        'chat_id' => $chat->id,
+                        'customer_id' => $customer->id,
+                    ]);
+                }
+            }
             return response()->json([
                 'customer' => $customer,
                 'access_token' => $token,
                 'status' => true,
+                '$chats' => $chats,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

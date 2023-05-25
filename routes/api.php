@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\PasswordResetRequestController;
+use App\Http\Controllers\CategoriesController;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Route;
 
 /*
