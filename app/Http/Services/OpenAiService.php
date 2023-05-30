@@ -21,7 +21,7 @@ class OpenAiService
             "model" => "gpt-3.5-turbo",
             "messages" => [
                 ["role" => "system", "content" => "My name is MSU"],
-                ["role" => "system", "content" => "I was created by Joe."],
+                ["role" => "system", "content" => "I was created by MSU team."],
                 ["role" => "user", "content" => $question],
             ],
             "temperature" => 0,
