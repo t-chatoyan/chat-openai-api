@@ -145,11 +145,7 @@ class ChatController extends Controller
         try{
             $customer = auth('api')->user();
             $customer->update([
-<<<<<<< HEAD
                 'questionnaire' => true
-=======
-                'application' => true
->>>>>>> ce94189ead7d4232bf00110093f9a1118b137715
             ]);
             $customer_id = $customer->id;
             $chat = Chat::where(['name' => 'Познакомь Искусственный Интеллект MSU с собой.','customer_id' => $customer_id])->get();
