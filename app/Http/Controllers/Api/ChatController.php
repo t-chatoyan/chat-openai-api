@@ -140,12 +140,12 @@ class ChatController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendAnketa(Request $request)
+    public function sendApplication(Request $request)
     {
         try{
             $customer = auth('api')->user();
             $customer->update([
-                'anketa' => true
+                'application' => true
             ]);
             $customer_id = $customer->id;
             $chat = Chat::where(['name' => 'Познакомь Искусственный Интеллект MSU с собой.','customer_id' => $customer_id])->get();

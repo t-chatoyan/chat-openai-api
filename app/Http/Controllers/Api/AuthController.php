@@ -22,11 +22,9 @@ class AuthController extends Controller
         try {
             $data = $request->validated();
             $data['password'] = bcrypt($data['password']);
+            $data['application'] = false;
 
-            $customer = Customer::create([
-                ...$data,
-                'anketa' => false
-            ]);
+            $customer = Customer::create($data);
 
             $token = JWTAuth::fromUser($customer);
             $categories = Categories::all();

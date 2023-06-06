@@ -37,7 +37,7 @@ Route::group([
         Route::get('/messages/{id}',[ChatController::class,'getMessages']);
         Route::get('/chats',[ChatController::class,'getChats']);
         Route::post('/chats/update/{id}',[ChatController::class,'update']);
-        Route::post('/send-anketa',[ChatController::class,'sendAnketa']);
+        Route::post('/send-application',[ChatController::class,'sendApplication']);
     });
 });
 
