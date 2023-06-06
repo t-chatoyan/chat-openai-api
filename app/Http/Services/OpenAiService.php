@@ -3,8 +3,6 @@
 namespace App\Http\Services;
 
 
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class OpenAiService
@@ -25,13 +23,13 @@ class OpenAiService
                 ["role" => "user", "content" => $question],
             ],
             "temperature" => 0,
-            "max_tokens" => 3000,
+            "max_tokens" => 3000, // 4096
         ];
-
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $api_key,
             'Content-Type' => 'application/json',
         ])->post($api_endpoint , $request_body);
+        dd($response->json());
         return $response->json();
     }
 }

@@ -7,9 +7,7 @@ use App\Http\Requests\SignupRequest;
 use App\Models\Categories;
 use App\Models\Chat;
 use App\Models\Customer;
-use App\Models\Admin;
 use App\Models\Messages;
-use http\Message;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -25,10 +23,11 @@ class AuthController extends Controller
             $data = $request->validated();
             $data['password'] = bcrypt($data['password']);
 
-            /**
-             * @var Admin \App\Models\User
-             */
-            $customer = Customer::create($data);
+            $customer = Customer::create([
+                ...$data,
+                'anketa' => false
+            ]);
+
             $token = JWTAuth::fromUser($customer);
             $categories = Categories::all();
             $chats = [];
@@ -36,6 +35,7 @@ class AuthController extends Controller
                 $chat = Chat::create([
                     'customer_id' => $customer->id,
                     'category_id' => $category->id,
+                    'is_default' => true,
                     'name' => $category->name,
                 ]);
                 $chats[] = $chat;

@@ -12,6 +12,7 @@ class Chat extends Model
     protected $fillable = [
         'customer_id',
         'name',
+        'is_default',
         'category_id',
     ];
 
