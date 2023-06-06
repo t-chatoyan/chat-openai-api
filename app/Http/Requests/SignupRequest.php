@@ -25,7 +25,7 @@ class SignupRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:55',
-            'email' => 'required|email|unique:customers,email',
+            'email' => 'required|max:255|email|unique:customers,email',
             'password' => 'min:8|required_with:confirmPassword|same:confirmPassword',
             'confirmPassword' => 'min:8'
         ];

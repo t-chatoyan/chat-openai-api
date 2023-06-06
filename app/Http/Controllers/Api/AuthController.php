@@ -25,7 +25,6 @@ class AuthController extends Controller
             $data['application'] = false;
 
             $customer = Customer::create($data);
-
             $token = JWTAuth::fromUser($customer);
             $categories = Categories::all();
             $chats = [];
