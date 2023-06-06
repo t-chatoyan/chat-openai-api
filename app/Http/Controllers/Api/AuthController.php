@@ -25,7 +25,7 @@ class AuthController extends Controller
 
             $customer = Customer::create([
                 ...$data,
-                'anketa' => false
+                'questionnaire' => false
             ]);
 
             $token = JWTAuth::fromUser($customer);
