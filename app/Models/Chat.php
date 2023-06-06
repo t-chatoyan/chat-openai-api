@@ -16,6 +16,8 @@ class Chat extends Model
         'category_id',
     ];
 
+    protected $casts = ['is_default' => 'boolean'];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
