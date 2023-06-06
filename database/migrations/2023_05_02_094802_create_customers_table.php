@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+<<<<<<< HEAD
             $table->boolean('questionnaire');
+=======
+            $table->boolean('application');
+>>>>>>> ce94189ead7d4232bf00110093f9a1118b137715
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
