@@ -29,7 +29,6 @@ class OpenAiService
             'Authorization' => 'Bearer ' . $api_key,
             'Content-Type' => 'application/json',
         ])->post($api_endpoint , $request_body);
-        dd($response->json());
         return $response->json();
     }
 }

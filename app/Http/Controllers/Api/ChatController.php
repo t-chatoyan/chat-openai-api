@@ -177,10 +177,10 @@ class ChatController extends Controller
                'message' => 'Your form is completed',
             ],200);
         } catch (\Exception $e) {
-        return response()->json([
-            'messages' => $e->getMessage(),
-            'status' => false,
-        ], 500);
+            return response()->json([
+                'messages' => $e->getMessage(),
+                'status' => false,
+            ], 500);
         }
     }
 }
