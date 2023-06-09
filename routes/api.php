@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\CountriesController;
 use App\Http\Controllers\Api\PasswordResetRequestController;
 use App\Http\Controllers\CategoriesController;
 use App\Models\Categories;
@@ -38,6 +39,7 @@ Route::group([
         Route::get('/chats',[ChatController::class,'getChats']);
         Route::post('/chats/update/{id}',[ChatController::class,'update']);
         Route::post('/send-application',[ChatController::class,'sendApplication']);
+        Route::get('/countries',[CountriesController::class,'index']);
     });
 });
 

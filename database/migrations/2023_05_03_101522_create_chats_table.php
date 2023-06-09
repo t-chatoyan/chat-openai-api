@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->boolean('is_default');
+            $table->boolean('acquaintance');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('category_id')->nullable();
 

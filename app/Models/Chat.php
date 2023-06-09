@@ -13,6 +13,7 @@ class Chat extends Model
         'customer_id',
         'name',
         'is_default',
+        'acquaintance',
         'category_id',
     ];
 

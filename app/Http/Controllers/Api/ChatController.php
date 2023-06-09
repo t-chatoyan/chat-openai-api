@@ -35,12 +35,14 @@ class ChatController extends Controller
                 Messages::create([
                     'message' => $request->message,
                     'is_user' => true,
+                    'is_default' => false,
                     'chat_id' => $chat->id,
                     'customer_id' => auth('api')->user()->id,
                 ]);
 
                 $message = Messages::create([
                     'message' => $answer,
+                    'is_default' => false,
                     'is_user' => false,
                     'chat_id' => $chat->id,
                     'customer_id' => auth('api')->user()->id,
@@ -145,9 +147,10 @@ class ChatController extends Controller
             ]);
 
             $customer_id = $customer->id;
-            $chat = Chat::where(['category_id' => 1,'customer_id' => $customer_id])->get();
+            $chat = Chat::where(['acquaintance' => 1,'customer_id' => $customer_id])->get();
             $chat_id = $chat[0]->id;
             $messages = [
+                'Познакомь Искусственный Интеллект MSU с собой.',
                 'Начинай пользоваться возможностями искусственного интеллекта для себя.',
                 'Обязательно отвечай на все вопросы честно и откровенно, потому что это будет влиять на твои результаты. Алгоритм будет подбирать специально под тебя решение. Если твои ответы врут, то и решения будут некачественными и не подходящими для тебя. Поэтому старайся быть максимально предельно честным по отношению к себе. И тогда алгоритм подберет для тебя точечное фокусное решение, которое будет для тебя приносить максимальный результат.',
                 'Внутри твоего помощника все распределено по категориям с возможностью создать свою персональную категорию.',
@@ -165,6 +168,7 @@ class ChatController extends Controller
                 Messages::create([
                     'message' => $message,
                     'is_user' => false,
+                    'is_default' => true,
                     'chat_id' => $chat_id,
                     'customer_id' => auth('api')->user()->id,
                 ]);

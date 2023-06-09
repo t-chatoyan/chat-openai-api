@@ -29,22 +29,24 @@ class AuthController extends Controller
             $categories = Categories::all();
             $chats = [];
             foreach ($categories as $category) {
-                $chat = Chat::create([
-                    'customer_id' => $customer->id,
-                    'category_id' => $category->id,
-                    'is_default' => true,
-                    'name' => $category->name,
-                ]);
-                $chats[] = $chat;
-            }
-            foreach ($chats as $chat) {
-                if($chat->name === 'Познакомь Искусственный Интеллект MSU с собой.') {
-                    Messages::create([
-                        'message' => 'Когда, во время прохождения программы, у тебя будут появляться инсайты, новые компетенции, открываться твои сильные стороны, появится твой уникальный дар, то обязательно дополняй информацию о себе в этой категории.',
-                        'is_user' => false,
-                        'chat_id' => $chat->id,
+                if($category->name === 'Познакомь Искусственный Интеллект MSU с собой.') {
+                    $chat = Chat::create([
                         'customer_id' => $customer->id,
+                        'category_id' => $category->id,
+                        'is_default' => true,
+                        'acquaintance' => true,
+                        'name' => $category->name,
                     ]);
+                    $chats[] = $chat;
+                } else {
+                    $chat = Chat::create([
+                        'customer_id' => $customer->id,
+                        'category_id' => $category->id,
+                        'is_default' => true,
+                        'acquaintance' => false,
+                        'name' => $category->name,
+                    ]);
+                    $chats[] = $chat;
                 }
             }
             return response()->json([
