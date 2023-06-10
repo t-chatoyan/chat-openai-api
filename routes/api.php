@@ -36,6 +36,7 @@ Route::group([
         Route::get('me', [AuthController::class, 'me']);
         Route::post('/message',[ChatController::class,'sendMessage']);
         Route::get('/messages/{id}',[ChatController::class,'getMessages']);
+        Route::get('/default-messages/{id}',[ChatController::class,'getDefaultMessages']);
         Route::get('/chats',[ChatController::class,'getChats']);
         Route::post('/chats/update/{id}',[ChatController::class,'update']);
         Route::post('/send-application',[ChatController::class,'sendApplication']);

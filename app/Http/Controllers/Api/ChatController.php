@@ -90,6 +90,37 @@ class ChatController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDefaultMessages($id)
+    {
+        try {
+            $defaultMessages = Messages::where('chat_id', $id)
+                ->where('customer_id', auth('api')->user()->id)->orderBy('id', 'asc')->get();
+
+            $setMessages = Messages::where('chat_id', $id)
+                ->where('customer_id', auth('api')->user()->id)->orderBy('id', 'asc')->get();
+
+            foreach ($setMessages as $message) {
+                $message->update([
+                    'is_default' => false,
+                ]);
+            }
+
+            return response()->json([
+                'data' => $defaultMessages,
+                'status' => true,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'messages' => $e->getMessage(),
+                'status' => false,
+            ], 500);
+        }
+    }
+
+    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function getChats()
