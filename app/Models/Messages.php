@@ -15,6 +15,7 @@ class Messages extends Model
         'chat_id',
         'customer_id',
         'is_user',
+        'created_at',
     ];
 
     protected $appends = ['type'];

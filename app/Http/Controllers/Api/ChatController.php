@@ -9,6 +9,7 @@ use App\Models\Categories;
 use App\Models\Chat;
 use App\Models\Customer;
 use App\Models\Messages;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -196,13 +197,14 @@ class ChatController extends Controller
                 'Срок доступа к помощнику: помощник доступен все время прохождения программы + 1 мес. после окончания',
             ];
 
-            foreach ($messages as $message) {
+            foreach ($messages as $index => $message) {
                 Messages::create([
                     'message' => $message,
                     'is_user' => false,
                     'is_default' => true,
                     'chat_id' => $chat_id,
                     'customer_id' => auth('api')->user()->id,
+                    'created_at' => Carbon::now()->addSecond(($index + 1) * 3)
                 ]);
             }
 
