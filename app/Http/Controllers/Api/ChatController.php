@@ -7,6 +7,7 @@ use App\Http\Resources\MessageResource;
 use App\Http\Services\OpenAiService;
 use App\Models\Categories;
 use App\Models\Chat;
+use App\Models\Customer;
 use App\Models\Messages;
 use Illuminate\Http\Request;
 
@@ -172,15 +173,15 @@ class ChatController extends Controller
     public function sendApplication(Request $request)
     {
         try {
-            $customer = auth('api')->user();
-            $customer->update([
+            $customer_id = auth('api')->id();
+            $customer = Customer::where('id', $customer_id)->update([
                 'application' => true
             ]);
 
-            $customer_id = $customer->id;
-            $chat = Chat::where(['acquaintance' => 1,'customer_id' => $customer_id])->get();
+            $chat = Chat::where(['acquaintance' => 1,'customer_id' => auth('api')->id()])->get();
             $chat_id = $chat[0]->id;
             $messages = [
+                'Добро пожаловать в искусственный интеллект MetaSpeedUp',
                 'Познакомь Искусственный Интеллект MSU с собой.',
                 'Начинай пользоваться возможностями искусственного интеллекта для себя.',
                 'Обязательно отвечай на все вопросы честно и откровенно, потому что это будет влиять на твои результаты. Алгоритм будет подбирать специально под тебя решение. Если твои ответы врут, то и решения будут некачественными и не подходящими для тебя. Поэтому старайся быть максимально предельно честным по отношению к себе. И тогда алгоритм подберет для тебя точечное фокусное решение, которое будет для тебя приносить максимальный результат.',
