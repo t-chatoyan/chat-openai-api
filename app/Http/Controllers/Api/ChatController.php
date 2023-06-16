@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Messages;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use function Symfony\Component\String\length;
 
 class ChatController extends Controller
 {
@@ -22,25 +23,27 @@ class ChatController extends Controller
     {
         try {
             $question = OpenAiService::sendQuestion($request->message);
+
+            $chat = Chat::find($request->chat_id);
+            if (!$chat) {
+                $chat = Chat::create([
+                    'customer_id' => auth('api')->user()->id,
+                    'is_default' => false,
+                    'name' => $request->name ? $request->name : null,
+                ]);
+            }
+
+            Messages::create([
+                'message' => $request->message,
+                'is_user' => true,
+                'is_default' => false,
+                'chat_id' => $chat->id,
+                'customer_id' => auth('api')->user()->id,
+            ]);
+
             if ($question && $question['choices'] && $question['choices'][0]) {
                 $answer = $question['choices'][0]['message']['content'];
-                $chat = Chat::find($request->chat_id);
 
-                if (!$chat) {
-                    $chat = Chat::create([
-                        'customer_id' => auth('api')->user()->id,
-                        'is_default' => false,
-                        'name' => $request->name ? $request->name : null,
-                    ]);
-                }
-
-                Messages::create([
-                    'message' => $request->message,
-                    'is_user' => true,
-                    'is_default' => false,
-                    'chat_id' => $chat->id,
-                    'customer_id' => auth('api')->user()->id,
-                ]);
 
                 $message = Messages::create([
                     'message' => $answer,
@@ -183,7 +186,7 @@ class ChatController extends Controller
             $chat_id = $chat[0]->id;
             $messages = [
                 'Добро пожаловать в искусственный интеллект MetaSpeedUp',
-                'Раз в две недели может выскакивать notification с текстом - если узнал о себе что-то новое, то добавь информацию в эту категорию): Когда, во время прохождения программы, у тебя будут появляться инсайты, новые компетенции, открываться твои сильные стороны, появится твой уникальный дар, то обязательно дополняй информацию о себе в этой категории.',
+                'Когда, во время прохождения программы, у тебя будут появляться инсайты, новые компетенции, открываться твои сильные стороны, появится твой уникальный дар, то обязательно дополняй информацию о себе в этой категории.',
                 'Начинай пользоваться возможностями искусственного интеллекта для себя.',
                 'Обязательно отвечай на все вопросы честно и откровенно, потому что это будет влиять на твои результаты. Алгоритм будет подбирать специально под тебя решение. Если твои ответы врут, то и решения будут некачественными и не подходящими для тебя. Поэтому старайся быть максимально предельно честным по отношению к себе. И тогда алгоритм подберет для тебя точечное фокусное решение, которое будет для тебя приносить максимальный результат.',
                 'Внутри твоего помощника все распределено по категориям с возможностью создать свою персональную категорию.',
@@ -195,7 +198,6 @@ class ChatController extends Controller
                 'Подключайся к нашему комьюнити в телеграм https://t.me/metaspeedup',
                 'Срок доступа к помощнику: помощник доступен все время прохождения программы + 1 мес. после окончания',
             ];
-
             foreach ($messages as $index => $message) {
                 $seconds = ($index + 1) * 3;
                 Messages::create([
@@ -204,7 +206,7 @@ class ChatController extends Controller
                     'is_default' => true,
                     'chat_id' => $chat_id,
                     'customer_id' => auth('api')->user()->id,
-                    'created_at' => Carbon::now()->subSeconds($seconds)
+                    'created_at' => Carbon::now()->addSecond($seconds)
                 ]);
             }
 
